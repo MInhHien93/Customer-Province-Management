@@ -8,7 +8,6 @@ public class CustomerService implements ICustomerService {
     @Autowired
     public CustomerRepository customerRepository;
 
-
     @Override
     public Iterable<Customer> findAll() {
         return customerRepository.findAll();

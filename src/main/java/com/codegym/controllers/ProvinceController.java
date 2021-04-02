@@ -53,11 +53,30 @@ public class ProvinceController {
     }
 
     @PostMapping("/edit-province")
-    public ModelAndView updateProvince(@ModelAttribute Province province) {
+    public ModelAndView updateProvince(@ModelAttribute("province") Province province) {
         provinceService.save(province);
         ModelAndView mav = new ModelAndView("/province/edit");
-        mav.addObject("province",province);
+        mav.addObject("province", province);
         mav.addObject("message", "Province updated successfully!");
         return mav;
+    }
+
+    @GetMapping("/delete-province/{id}")
+    public ModelAndView showDeleteForm(@PathVariable Long id) {
+        Province province = provinceService.findById(id);
+        if (province != null) {
+            ModelAndView mav = new ModelAndView("/province/delete");
+            mav.addObject("province", province);
+            return mav;
+        } else {
+            ModelAndView mav = new ModelAndView("/error.404");
+            return mav;
+        }
+    }
+
+    @PostMapping("/delete-province")
+    public String deleteProvince(@ModelAttribute("province") Province province) {
+        provinceService.delete(province.getId());
+        return "redirect:/provinces";
     }
 }

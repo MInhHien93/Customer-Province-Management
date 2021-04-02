@@ -1,5 +1,7 @@
 package com.codegym.configuration;
 
+import com.codegym.models.service.CustomerService;
+import com.codegym.models.service.ICustomerService;
 import com.codegym.models.service.IProvinceService;
 import com.codegym.models.service.ProvinceService;
 import org.springframework.beans.BeansException;
@@ -114,17 +116,10 @@ public class AppConfig implements WebMvcConfigurer, ApplicationContextAware {
         return properties;
     }
 
-//    Được thay bằng @EnableJpaRepositories("com.codegym.cms.repository")
-//    @Bean
-//    public ICustomerRepository customerRepository() {
-//        return new CustomerRepository();
-//    }
-//
-
-//    @Bean
-//    public ICustomerService customerService() {
-//        return new CustomerService();
-//    }
+    @Bean
+    public ICustomerService customerService() {
+        return new CustomerService();
+    }
 
     @Bean
     public IProvinceService provinceService() {

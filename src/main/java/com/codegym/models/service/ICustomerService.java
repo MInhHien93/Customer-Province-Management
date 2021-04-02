@@ -1,7 +1,6 @@
 package com.codegym.models.service;
 
 import com.codegym.models.entities.Customer;
-import com.codegym.repository.CustomerRepository;
 
 public interface ICustomerService {
     Iterable<Customer> findAll();
