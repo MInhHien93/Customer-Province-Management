@@ -1,10 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/customer/layout :: head">
 </head>
 <body>
-
+<h2> Customer Information</h2>
+<p>
+    <a href="/customers">Back To List Customers</a>
+</p>
+<div id="form">
+    <form th:action="@{/delete-customer}" th:object="${customer}" method="post">
+        <input th:type="hidden" name="id" th:field="*{id}">
+        <table id="customers">
+            <thread>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Province</th>
+                </tr>
+            </thread>
+            <tbody>
+            <tr>
+                <td th:text="${customer.firstName}">
+                </td>
+                <td th:text="${customer.lastName}">
+                </td>
+                <td th:text="${customer.province.name}">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <label>
+            <input type="submit" class="btn btn-danger" value="Delete Customer"/>
+        </label>
+    </form>
+</div>
+<footer th:replace="/customer/layout :: footer"></footer>
 </body>
 </html>
