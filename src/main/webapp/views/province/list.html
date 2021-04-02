@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/province/layout :: head">
+</head>
+<body>
+<h2>List Provinces</h2>
+<p>
+    <a href="/create-province">Add New Province</a>
+</p>
+<div id="form">
+    <table id="provinces">
+        <thread>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thread>
+        <tbody>
+        <th:block th:each="province : ${provinces}">
+            <tr>
+                <td></td>
+                <td th:text="${province.name}"></td>
+                <td>
+                    <a class="btn btn-primary" th:href="@{/edit-province/__${province.id}__}">Edit</a>
+                </td>
+                <td>
+                    <a class="btn btn-danger" th:href="@{/delete-province/__${province.id}__}">Delete</a>
+                </td>
+            </tr>
+        </th:block>
+        </tbody>
+
+    </table>
+</div>
+<footer th:replace="/province/layout :: footer"></footer>
+</body>
+</html>
