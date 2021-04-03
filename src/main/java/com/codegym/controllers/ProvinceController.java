@@ -1,6 +1,8 @@
 package com.codegym.controllers;
 
+import com.codegym.models.entities.Customer;
 import com.codegym.models.entities.Province;
+import com.codegym.models.service.ICustomerService;
 import com.codegym.models.service.IProvinceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,8 +14,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class ProvinceController {
+
     @Autowired
     public IProvinceService provinceService;
+
+    @Autowired
+    public ICustomerService customerService;
 
     @GetMapping("/create-province")
     public ModelAndView showCreateForm() {
@@ -40,7 +46,7 @@ public class ProvinceController {
     }
 
     @GetMapping("/edit-province/{id}")
-    public ModelAndView showEditForm(@PathVariable Long id) {
+    public ModelAndView showEditForm(@PathVariable("id") Long id) {
         Province province = provinceService.findById(id);
         if (province != null) {
             ModelAndView mav = new ModelAndView("/province/edit");
@@ -62,7 +68,7 @@ public class ProvinceController {
     }
 
     @GetMapping("/delete-province/{id}")
-    public ModelAndView showDeleteForm(@PathVariable Long id) {
+    public ModelAndView showDeleteForm(@PathVariable("id") Long id) {
         Province province = provinceService.findById(id);
         if (province != null) {
             ModelAndView mav = new ModelAndView("/province/delete");
@@ -79,4 +85,20 @@ public class ProvinceController {
         provinceService.delete(province.getId());
         return "redirect:/provinces";
     }
+
+    @GetMapping("/view-provinces{id}")
+    public ModelAndView viewProvince(@PathVariable("id") Long id){
+        Province province = provinceService.findById(id);
+        if (province != null) {
+            Iterable<Customer> customers = customerService.findAllByProvince(province);
+            ModelAndView mav = new ModelAndView("/province/view");
+            mav.addObject("province", province);
+            mav.addObject("customers",customers);
+            return mav;
+        }
+        else {
+            return new ModelAndView("/error.404");
+        }
+    }
+
 }

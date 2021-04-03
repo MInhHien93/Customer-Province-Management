@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/province/layout :: head"></head>
+<body>
+<h2>
+    View Province <span th:text="${province.name}"></span>
+</h2>
+<p>
+    <a href="/provinces">Back To List Provinces</a>
+</p>
+<table id="provinces">
+    <thread>
+        <tr>
+            <td>#</td>
+            <td>First Name</td>
+            <td>Last Name</td>
+        </tr>
+    </thread>
+    <tbody>
+        <th:block th:each="customer :${customers}">
+            <tr>
+                <td></td>
+                <td th:text="${customer.firstName}"></td>
+                <td th:text="${customer.lastName}"></td>
+            </tr>
+        </th:block>
+    </tbody>
+</table>
+<footer th:replace="/province/layout :: footer"></footer>
+</body>
+</html>
