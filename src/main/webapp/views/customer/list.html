@@ -6,6 +6,11 @@
 <p>
     <a th:href="@{/create-customer}">Add New Customer</a>
 </p>
+<form>
+    Search by first name:
+    <input name="s" type="text"/>
+    <input type="submit" value="Search"/>
+</form><br/>
 <table id="customers">
     <thread>
         <tr>
@@ -32,6 +37,11 @@
     </th:block>
     </tbody>
 </table>
+<div>
+    <a th:href="@{'/customers'(page=${customers.number - 1})}" th:if="${customers.hasPrevious()}">Previous</a>
+    <span th:text="${customers.number + 1}"></span>/<span th:text="${customers.totalPages}"></span>
+    <a th:href="@{'/customers'(page=${customers.number + 1})}" th:if="${customers.hasNext()}">Next</a>
+</div>
 <footer th:replace="/customer/layout :: footer"></footer>
 </body>
 </html>

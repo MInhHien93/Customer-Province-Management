@@ -4,14 +4,21 @@ import com.codegym.models.entities.Customer;
 import com.codegym.models.entities.Province;
 import com.codegym.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public class CustomerService implements ICustomerService {
     @Autowired
     public CustomerRepository customerRepository;
 
     @Override
-    public Iterable<Customer> findAll() {
-        return customerRepository.findAll();
+    public Page<Customer> findAllByFirstNameContaining(String firstname, Pageable pageable) {
+        return customerRepository.findAllByFirstNameContaining(firstname, pageable);
+    }
+
+    @Override
+    public Page<Customer> findAll(Pageable pageable) {
+        return customerRepository.findAll(pageable);
     }
 
     @Override

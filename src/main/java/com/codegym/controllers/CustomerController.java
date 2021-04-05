@@ -5,12 +5,13 @@ import com.codegym.models.entities.Province;
 import com.codegym.models.service.ICustomerService;
 import com.codegym.models.service.IProvinceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Optional;
 
 @Controller
 public class CustomerController {
@@ -42,8 +43,13 @@ public class CustomerController {
     }
 
     @GetMapping("/customers")
-    public ModelAndView showListCustomer() {
-        Iterable<Customer> customers = customerService.findAll();
+    public ModelAndView showListCustomer(@RequestParam("s") Optional<String> s, Pageable pageable) {
+        Page<Customer> customers;
+        if(s.isPresent()){
+            customers = customerService.findAllByFirstNameContaining(s.get(), pageable);
+        } else {
+            customers = customerService.findAll(pageable);
+        }
         ModelAndView mav = new ModelAndView("/customer/list");
         mav.addObject("customers", customers);
         return mav;
